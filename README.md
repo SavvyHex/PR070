@@ -1,2 +1,3 @@
 # PR070
-LC-3 virtual machine
+
+PR070 (Proto) is a virtual machine based on the LC (Little Computer) 3
