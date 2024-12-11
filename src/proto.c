@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Storage
 #define MAX_MEMORY (1<<16)
@@ -56,3 +58,73 @@ enum{
     OP_TRAP,    // Execute trap
 };
 
+int main(int argc, char *argv[])
+{
+    // Show the usage of the command
+    if (argc < 2) {
+        printf("proto [image-file1]...\n");
+        exit(1);
+    }
+
+    // Checking if all given image files are valid
+    for (int j = 1; j < argc; j++) {
+        if (!read_image(argv[j])) {
+            printf("ERROR : failed to load image %s\n", argv[j]);
+            exit(1);
+        }
+    }
+
+    // TODO: Setup
+
+    // Initializing the condition flag to zero
+    registers[R_COND] = FL_ZRO;
+
+    // Setting the PC up to starting position
+    enum{ PC_START = 0x3000 };
+    registers[R_PC] = PC_START;
+
+    int running = 1;
+    while (running) {
+        // Get the next operation
+        uint16_t instr = mem_read(registers[R_PC]++);
+        uint16_t op = instr >> 12;
+
+        // Switch case to handle the operation input
+        switch (op) {
+            case OP_ADD:
+                break;
+            case OP_AND:
+                break;
+            case OP_NOT:
+                break;
+            case OP_BR:
+                break;
+            case OP_JMP:
+                break;
+            case OP_JSR:
+                break;
+            case OP_LD:
+                break;
+            case OP_LDI:
+                break;
+            case OP_LDR:
+                break;
+            case OP_LEA:
+                break;
+            case OP_ST:
+                break;
+            case OP_STI:
+                break;
+            case OP_STR:
+                break;
+            case OP_TRAP:
+                break;
+            case OP_RES:
+            case OP_RTI:
+            default:
+                // TODO: Bad Code
+                break;
+        }
+    }
+    // Shutdown the PC
+}
