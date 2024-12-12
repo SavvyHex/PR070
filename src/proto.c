@@ -67,6 +67,20 @@ uint16_t sign_extend(uint16_t x, int bit_count){
     return x;
 }
 
+// Update Flags
+// checks if a number is positive, negative or zero and updates the condition flag accordingly
+void update_flags(uint16_t r){
+    if (registers[r] == 0) {
+        registers[R_COND] = FL_ZRO;
+    } else if (registers[r] >> 15) { // 1 in the left most bit indicates a negative number
+        registers[R_COND] = FL_NEG;
+    } else {
+        registers[R_COND] = FL_POS;
+    }
+}
+
+
+// Main function
 int main(int argc, char *argv[])
 {
     // Show the usage of the command
