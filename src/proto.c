@@ -218,6 +218,7 @@ int main(int argc, char *argv[])
         uint16_t op = instr >> 12;
 
         uint16_t r0, r1, r2, imm_flag, pc_offset;
+        uint16_t* c;
         // Switch case to handle the operation input
         switch (op) {
             case OP_ADD:
@@ -322,7 +323,7 @@ int main(int argc, char *argv[])
                         putc((char)registers[R_R0], stdout);
                         break;
                     case TRAP_PUTS:
-                        uint16_t* c = memory + registers[R_R0];
+                        c = memory + registers[R_R0];
                         while (*c) {
                             putc((char)*c, stdout);
                             ++c;
@@ -338,7 +339,7 @@ int main(int argc, char *argv[])
                         update_flags(R_R0);
                         break;
                     case TRAP_PUTSP:
-                        uint16_t* c = memory + registers[R_R0];
+                        c = memory + registers[R_R0];
                         while (*c) {
                             char char1 = (*c) & 0xFF;
                             putc(char1, stdout);
