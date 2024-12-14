@@ -61,12 +61,12 @@ enum{
 // Trap Routines
 // predefined commonly used routines
 enum{
-    TRAP_GETC = 0x20,
-    TRAP_OUT = 0x21,
-    TRAP_PUTS = 0x22,
-    TRAP_IN = 0x23,
-    TRAP_PUTSP = 0x24,
-    TRAP_HALT = 0x25,
+    TRAP_GETC = 0x20,   // Reads a single ASCII character
+    TRAP_OUT = 0x21,    // Outputs a character
+    TRAP_PUTS = 0x22,   // Prints a null-terminated string
+    TRAP_IN = 0x23,     // Prompt for input character
+    TRAP_PUTSP = 0x24,  // Outputs a string
+    TRAP_HALT = 0x25,   // Halts (stops) the program
 }; 
 
 // Sign Extension
@@ -90,7 +90,26 @@ void update_flags(uint16_t r){
     }
 }
 
+// Swap each uint16 that is loaded
+// LC3 is big-endian but modern computers are little-endian
+uint16_t swap16(uint16_t x){
+    return (x << 8) | (x >> 8);
+}
 
+// Reading images
+// a function to read image files
+void read_image_file(FILE* file){
+    uint16_t origin;
+    fread(&origin, sizeof(origin), 1, file);
+    origin = swap16(origin);
+    uint16_t max_read = MAX_MEMORY - origin;
+    uint16_t* p = memory + origin;
+    size_t read = fread(p, sizeof(uint16_t), max_read, file);
+    while (read --> 0) {
+        *p = swap16(p);
+        ++p;
+    }
+}
 // Main function
 int main(int argc, char *argv[])
 {
