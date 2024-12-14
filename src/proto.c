@@ -58,6 +58,17 @@ enum{
     OP_TRAP,    // Execute trap
 };
 
+// Trap Routines
+// predefined commonly used routines
+enum{
+    TRAP_GETC = 0x20,
+    TRAP_OUT = 0x21,
+    TRAP_PUTS = 0x22,
+    TRAP_IN = 0x23,
+    TRAP_PUTSP = 0x24,
+    TRAP_HALT = 0x25,
+}; 
+
 // Sign Extension
 // fills zeroes for positive numbers, ones for negative numbers
 uint16_t sign_extend(uint16_t x, int bit_count){
