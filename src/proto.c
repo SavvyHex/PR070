@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
                         char in_c = getchar();
                         putc(in_c, stdout);
                         fflush(stdout);
-                        registers[R_R0] = (uint16_t)c;
+                        registers[R_R0] = (uint16_t)in_c;
                         update_flags(R_R0);
                         break;
                     case TRAP_PUTSP:
