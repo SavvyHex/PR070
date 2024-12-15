@@ -280,7 +280,8 @@ int main(int argc, char *argv[])
                 break;
             case OP_LDI:
                 r0 = (instr >> 9) & 0x7; // Destination register
-                pc_offset = mem_read(mem_read(registers[R_PC] + pc_offset));
+                pc_offset = sign_extend(instr & 0x1FF, 9);
+                r0 = mem_read(mem_read(registers[R_PC] + pc_offset));
                 update_flags(r0);
                 break;
             case OP_LDR:
